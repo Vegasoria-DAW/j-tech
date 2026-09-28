@@ -1,0 +1,25 @@
+# ============================================================
+# J-TECH - Configuracion Apache (IONOS)
+# Fallback SPA para que las rutas del blog funcionen al
+# recargar/compartir, y 404 real en slugs inexistentes.
+# ============================================================
+
+<IfModule mod_negotiation.c>
+  Options -MultiViews
+</IfModule>
+
+RewriteEngine On
+RewriteBase /
+
+# --- Slugs de blog validos: lista blanca ---
+# Si anades un articulo nuevo, agregalo aqui (separado por |).
+RewriteCond %{REQUEST_URI} ^/blog/
+RewriteRule !^blog/(aparecer-en-google-maps-cadiz|web-profesional-para-autonomos|redes-sociales-para-negocios-locales|digitalizar-negocio-por-donde-empezar|por-que-tu-web-no-aparece-en-google|mantenimiento-web-que-incluye)/?$ - [R=404,L]
+
+# --- Ficheros y directorios reales: no reescribir ---
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# --- El resto: index.html (SPA) ---
+RewriteRule ^ index.html [L]

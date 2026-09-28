@@ -1,0 +1,13 @@
+# J-TECH API - protecciones
+Options -Indexes
+
+# Impide el acceso directo a la configuracion (solo la usa contact.php)
+<Files "config.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>
